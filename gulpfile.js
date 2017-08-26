@@ -4,7 +4,7 @@ const qiniu = require('gulp-qiniu');
 const accessKey = 'qRffErplKquwE5_0JS6kQdQ4-oJWi8ZBpmH73MEP';
 const secretKey = 'XxeasCERbG7eWynf42W1bRHqaSOghlEM24LQnrsD';
 
-const qiniuOptions = function (bucket = 'weapp') {
+const qiniuOptions = (bucket) => {
   return qiniu({
     accessKey: accessKey,
     secretKey: secretKey,

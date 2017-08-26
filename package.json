@@ -15,6 +15,7 @@
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.28.5",
     "file-loader": "^0.11.2",
+    "glob": "^7.1.2",
     "gulp": "^3.9.1",
     "gulp-imagemin": "^3.3.0",
     "gulp-qiniu": "^0.2.4",

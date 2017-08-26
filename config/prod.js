@@ -1,12 +1,8 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const sourceDir = 'http://ov8hx9jya.bkt.clouddn.com/';
+const sourceDir = 'http://ov9z0zlev.bkt.clouddn.com/';
 module.exports = {
-  entry: {
-    'index/main': path.resolve(__dirname, '../src/index/main.js'),
-    'app/main': path.resolve(__dirname, '../src/app/main.js')
-  },
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, '../dist/build')
