@@ -1,6 +1,10 @@
 const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
 const qiniu = require('gulp-qiniu');
+const hash = require('gulp-hash-filename');
+const clean = require('gulp-clean');
+const rename = require("gulp-rename");
+
 const accessKey = 'qRffErplKquwE5_0JS6kQdQ4-oJWi8ZBpmH73MEP';
 const secretKey = 'XxeasCERbG7eWynf42W1bRHqaSOghlEM24LQnrsD';
 
@@ -35,7 +39,31 @@ gulp.task('font', function() {
 gulp.task('upload', ['img', 'font', 'js'], () => {});
 
 gulp.task('img-mini', function () {
-  gulp.src('./assets/images/*')
+  gulp.src('./dist/build/assets/images/*')
     .pipe(imagemin())
-    .pipe(gulp.dest('./assets/images'));
+    .pipe(gulp.dest('./dist/build/assets/images'));
+});
+
+gulp.task('copy-assets-local', function() {
+  return gulp.src('./assets/**/*')
+    .pipe(rename({}))
+    .pipe(gulp.dest('./dist/local/assets'))
+});
+
+gulp.task('clean-local', function () {
+   return gulp.src('./dist/local', {
+     read: false
+  }).pipe(clean());
+});
+
+gulp.task('copy-assets-build', function() {
+  return gulp.src('./assets/**/*')
+    .pipe(rename({}))
+    .pipe(gulp.dest('./dist/build/assets'))
+});
+
+gulp.task('clean-build', function () {
+   return gulp.src('./dist/build', {
+     read: false
+  }).pipe(clean());
 });

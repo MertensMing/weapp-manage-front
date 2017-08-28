@@ -1,5 +1,8 @@
 {
-  "app.js": "http://ov9z0zlev.bkt.clouddn.com/app.52c0179a70c4cd8b1b8a.js",
-  "app/index.js": "http://ov9z0zlev.bkt.clouddn.com/app/index.52c0179a70c4cd8b1b8a.js",
-  "index.js": "http://ov9z0zlev.bkt.clouddn.com/index.52c0179a70c4cd8b1b8a.js"
+  "app/index.js": "http://ov9z0zlev.bkt.clouddn.com/app/index.23010977fa4ff647d735.js",
+  "home/index.css": "http://ov9z0zlev.bkt.clouddn.com/style/home/index.3d89bca76364956931294808a819489e.css",
+  "home/index.js": "http://ov9z0zlev.bkt.clouddn.com/home/index.23010977fa4ff647d735.js",
+  "manifest.js": "http://ov9z0zlev.bkt.clouddn.com/manifest.23010977fa4ff647d735.js",
+  "vendor.css": "http://ov9z0zlev.bkt.clouddn.com/style/vendor.254253edbffdc7f5b6256996f55d24b2.css",
+  "vendor.js": "http://ov9z0zlev.bkt.clouddn.com/vendor.23010977fa4ff647d735.js"
 }
