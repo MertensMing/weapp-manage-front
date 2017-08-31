@@ -105,10 +105,15 @@ module.exports = Merge(commonConfig, {
       filename: '[name].[hash].js'
     }),
     new ManifestPlugin({
-      fileName: '../../version.json',
-      publicPath: sourceDir,
+      fileName: '../../../weapp-manage/version.js.json',
       filter: function (file) {
-        return /\.js|\.css/.test(file.name)
+        return /\.js/.test(file.name)
+      }
+    }),
+    new ManifestPlugin({
+      fileName: '../../../weapp-manage/version.css.json',
+      filter: function (file) {
+        return /\.css/.test(file.name)
       }
     }),
     new FastUglifyJsPlugin({

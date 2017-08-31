@@ -5,6 +5,7 @@ const Merge = require('webpack-merge');
 // 插件
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const generatorEntry = require('./generate.entry.js');
 const commonConfig = require('./webpack.common.js');
@@ -13,6 +14,13 @@ const sourceDir = 'dist/local/';
 
 const entry = generatorEntry('prod');
 const entryKeys = Object.keys(entry);
+
+const extractSCSS = new ExtractTextPlugin({
+  filename (getPath) {
+    return getPath('style/[name].css');
+  },
+  allChunks: true
+});
 
 module.exports = Merge(commonConfig, {
   entry,
@@ -49,11 +57,17 @@ module.exports = Merge(commonConfig, {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: extractSCSS.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: extractSCSS.extract({
+          fallback: "style-loader",
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.(png|svg|jpg|gif|jpeg)$/,
@@ -85,10 +99,21 @@ module.exports = Merge(commonConfig, {
     ]
   },
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: '[name].js',
+      minChunks: 2
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "manifest",
+      minChunks: Infinity,
+      filename: '[name].js'
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('dev')
     }),
     ...generateHtml(entryKeys),
+    extractSCSS,
   ],
 });
 
