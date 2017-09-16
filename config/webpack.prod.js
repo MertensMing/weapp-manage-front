@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const Merge = require('webpack-merge');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const FastUglifyJsPlugin = require('fast-uglifyjs-plugin');
@@ -13,7 +12,7 @@ const commonConfig = require('./webpack.common.js');
 const entry = generatorEntry('prod');
 const sourceDir = 'http://ov9z0zlev.bkt.clouddn.com/';
 
-const extractSCSS = new ExtractTextPlugin({
+const extractStyle = new ExtractTextPlugin({
   filename (getPath) {
     return getPath('style/[name].[contenthash].css');
   },
@@ -32,10 +31,7 @@ module.exports = Merge(commonConfig, {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
-          }
+          loader: 'babel-loader'
         }
       },
       {
@@ -49,16 +45,23 @@ module.exports = Merge(commonConfig, {
       },
       {
         test: /\.css$/,
-        use: extractSCSS.extract({
+        use: extractStyle.extract({
           fallback: "style-loader",
           use: "css-loader"
         })
       },
       {
         test: /\.scss$/,
-        use: extractSCSS.extract({
+        use: extractStyle.extract({
           fallback: "style-loader",
           use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.less$/,
+        use: extractStyle.extract({
+          fallback: "style-loader",
+          use: ['css-loader', 'less-loader']
         })
       },
       {
@@ -91,9 +94,6 @@ module.exports = Merge(commonConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
-    new CleanWebpackPlugin(['./dist/build'], {
-      root: path.resolve(__dirname, '../')
-    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       filename: '[name].[hash].js',
@@ -125,6 +125,6 @@ module.exports = Merge(commonConfig, {
       cacheFolder: path.resolve(__dirname, '.'),
       workerNum: 20
     }),
-    extractSCSS,
+    extractStyle,
   ],
 });

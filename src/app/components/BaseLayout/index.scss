@@ -1,0 +1,57 @@
+@import '../../../common/style/mixins.scss';
+.manage-layout {
+  height: 100vh;
+  .ant-layout-header {
+    background-color: #fff;
+    padding: 0 20px;
+  }
+  .ant-layout-content {
+    background-color: #fafafa;
+    padding: 20px;
+  }
+  .manage-sider {
+    background-color: #fff;
+    flex: 0 0 150px !important;
+    border-right: 1px solid #eee;
+    position: relative;
+  }
+  .manage-logo {
+    @include content-center;
+    height: 80px;
+    .img {
+      height: 40px;
+      width: 40px;
+    }
+  }
+  .manage-user {
+    @include content-center;
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    border-top: 1px solid #eee;
+    .user-name {
+      line-height: 3;
+      cursor: pointer;
+      color: #333;
+      font-weight: bold;
+    }
+  }
+}
+.user-info-pop {
+  .info {
+    @include content-center;
+    flex-direction: column;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+    line-height: 3;
+    color: #333;
+    .img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+  }
+}

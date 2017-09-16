@@ -4,7 +4,6 @@ const Merge = require('webpack-merge');
 
 // 插件
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const generatorEntry = require('./generate.entry.js');
@@ -13,9 +12,8 @@ const commonConfig = require('./webpack.common.js');
 const sourceDir = 'dist/local/';
 
 const entry = generatorEntry('prod');
-const entryKeys = Object.keys(entry);
 
-const extractSCSS = new ExtractTextPlugin({
+const extractStyle = new ExtractTextPlugin({
   filename (getPath) {
     return getPath('style/[name].css');
   },
@@ -41,9 +39,6 @@ module.exports = Merge(commonConfig, {
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: ['env']
-          }
         }
       },
       {
@@ -57,16 +52,23 @@ module.exports = Merge(commonConfig, {
       },
       {
         test: /\.css$/,
-        use: extractSCSS.extract({
+        use: extractStyle.extract({
           fallback: "style-loader",
           use: "css-loader"
         })
       },
       {
         test: /\.scss$/,
-        use: extractSCSS.extract({
+        use: extractStyle.extract({
           fallback: "style-loader",
           use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.less$/,
+        use: extractStyle.extract({
+          fallback: "style-loader",
+          use: ['css-loader', 'less-loader']
         })
       },
       {
@@ -112,19 +114,6 @@ module.exports = Merge(commonConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('dev')
     }),
-    ...generateHtml(entryKeys),
-    extractSCSS,
+    extractStyle,
   ],
 });
-
-function generateHtml (keys) {
-  const arr = [];
-  keys.forEach(key => {
-    arr.push(new HtmlWebpackPlugin({
-      filename: `${key}.html`,
-      chunks: [key],
-      template: './config/template.html'
-    }))
-  })
-  return arr;
-}

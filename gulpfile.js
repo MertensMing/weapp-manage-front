@@ -22,8 +22,8 @@ const qiniuOptions = (bucket) => {
 }
 
 gulp.task('img', function() {
-  gulp.src('./dist/build/**/*.{png,gif,jpg,jpeg}')
-    .pipe(qiniuOptions('weapp-resource'))
+  gulp.src('./dist/build/**/*.{png,gif,jpg,jpeg,svg}')
+    .pipe(qiniuOptions('weapp-static'))
 });
 
 gulp.task('js', function() {
@@ -31,12 +31,17 @@ gulp.task('js', function() {
     .pipe(qiniuOptions('weapp-static'))
 });
 
-gulp.task('font', function() {
-  gulp.src('./dist/build/**/*.{woff,woff2,eot,ttf,otf}')
-    .pipe(qiniuOptions('weapp-resource'))
+gulp.task('css', function() {
+  gulp.src('./dist/build/**/*.css')
+    .pipe(qiniuOptions('weapp-static'))
 });
 
-gulp.task('upload', ['img', 'font', 'js'], () => {});
+gulp.task('font', function() {
+  gulp.src('./dist/build/**/*.{woff,woff2,eot,ttf,otf}')
+    .pipe(qiniuOptions('weapp-static'))
+});
+
+gulp.task('upload', ['img', 'font', 'js', 'css'], () => {});
 
 gulp.task('img-mini', function () {
   gulp.src('./dist/build/assets/images/*')
