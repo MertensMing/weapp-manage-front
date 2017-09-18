@@ -1,35 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore, combineReducers } from 'redux'
-import { Router, Route, hashHistory, IndexRoute } from 'react-router'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import App from './App'
+import vueBeauty from 'vue-beauty'
+import router from './router'
+import 'atui/dist/greater-blue.css'
 
-import BaseLayout from './components/BaseLayout'
-import Home from './components/Home'
-import Tv from './components/Content/Tv'
-import Setting from './components/Setting'
+import 'vue-beauty/package/style/vue-beauty.min.css'
+    
+Vue.use(vueBeauty)
+Vue.use(VueRouter)
 
-import reducers from './reducers'
-
-const store = createStore(
-  combineReducers({
-    ...reducers,
-    routing: routerReducer
-  })
-)
-
-const history = syncHistoryWithStore(hashHistory, store)
-
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={BaseLayout}>
-        <IndexRoute component={Home} />
-        <Route path="/setting" component={Setting} />
-        <Route path="/content/tv" component={Tv} />
-      </Route>
-    </Router>
-  </Provider>,
-  document.getElementById('app-container')
-)
+new Vue({
+  el: '#app_container',
+  router,
+  render: h => h(App)
+})
