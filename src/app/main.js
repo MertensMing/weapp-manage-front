@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
-import vueBeauty from 'vue-beauty'
 import router from './router'
-import 'atui/dist/greater-blue.css'
+import ElementUI from 'element-ui'
 
-import 'vue-beauty/package/style/vue-beauty.min.css'
-    
-Vue.use(vueBeauty)
+import '../../theme/index.css'
+import './common/style/base.scss'
+
+Vue.use(ElementUI)
 Vue.use(VueRouter)
 
 new Vue({

@@ -15,6 +15,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.28.5",
+    "element-theme-default": "^1.4.4",
     "extract-text-webpack-plugin": "^2.1.2",
     "fast-uglifyjs-plugin": "^0.3.0",
     "fbjs": "^0.8.14",
@@ -41,8 +42,6 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
-    "antd": "^2.12.8",
-    "atui": "^0.1.2",
     "axios": "^0.16.2",
     "babel-core": "^6.25.0",
     "babel-loader": "^6.4.1",
@@ -54,6 +53,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "create-react-class": "^15.6.0",
+    "element-ui": "^1.4.4",
     "jsonp": "^0.2.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
@@ -73,10 +73,7 @@
     "vue-template-compiler": "^2.4.2",
     "vuex": "^2.4.0"
   },
-  "repository": {
-    "url": "git@github.com:MertensMing/weapp-manage-front.git",
-    "type": "git"
-  },
+  "repository": "git@github.com:MertensMing/weapp-manage-front.git",
   "theme": {
     "primary-color": "#1088ae"
   }

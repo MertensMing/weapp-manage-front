@@ -1,31 +1,32 @@
 <template>
-  <div class="login-form">
-    <v-form direction="vertical" :model="formModel">
-      <v-form-item label="用户名" prop="uname">
-        <v-input type="text" placeholder="用户名" v-model="formModel.uname"></v-input>
-      </v-form-item>
-      <v-form-item label="密码" prop="pwd" required>
-        <v-input type="password" placeholder="密码" v-model="formModel.pwd"></v-input>
-      </v-form-item>
-      <v-form-item style="margin-top:24px">
-        <router-link to="/login">忘记密码？</router-link>.
-        <router-link to="/signup">注册</router-link>
-      </v-form-item>
-      <v-form-item style="margin-top:24px">
-        <v-button type="primary" @click="postLogin">登录</v-button>
-      </v-form-item>
-    </v-form>
+  <div class="sign-form">
+    <h3 class="title">用户登陆</h3>
+    <el-form direction="vertical" :model="formModel">
+      <el-form-item label="用户名" prop="uname">
+        <el-input type="text" placeholder="请输入用户名" v-model="formModel.uname"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" prop="pwd">
+        <el-input type="password" placeholder="请输入密码" v-model="formModel.pwd"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" size="large" class="submit-btn syjx" @click="postLogin">登录</el-button>
+      </el-form-item>
+      <el-form-item>
+        <div class="links">
+          <router-link to="/reset" class="syjx">忘记密码？</router-link>
+          <router-link to="/signup" class="syjx">注册</router-link>
+        </div>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <style lang="scss">
-.login-form {
-  width: 200px;
-}
+  @import '../../../common/style/sign/index.scss';
 </style>
 
 <script>
-  import axios from 'axios'
+  import request from 'request'
   export default {
     data() {
       return {
@@ -37,15 +38,9 @@
     },
     methods: {
       postLogin() {
-        axios({
-          url:'/login.json',
-          method: 'post',
-          params: {
-            _csrf: window._csrf
-          },
-          data: this.formModel,
-          timeout: 1000
-        })
+        request
+          .post('/login.json', this.formModel)
+          .then(res => console.log('res', res))
       }
     }
   }

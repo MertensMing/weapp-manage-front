@@ -1,27 +1,27 @@
 <template>
-  <div class="reset-form">
-    <v-form direction="vertical">
-      <v-form-item label="用户名">
-        <v-input type="text" placeholder="用户名" size="large"></v-input>
-      </v-form-item>
-      <v-form-item label="新密码" required>
-        <v-input type="password" placeholder="密码" size="large"></v-input>
-      </v-form-item>
-      <v-form-item style="margin-top:24px">
-        <router-link to="/login">已有账号登录</router-link>.
-        <router-link to="/reset">忘记密码？</router-link>
-      </v-form-item>
-      <v-form-item style="margin-top:24px">
-        <v-button type="primary" html-type="submit">注册</v-button>
-      </v-form-item>
-    </v-form>
+  <div class="sign-form">
+    <h3 class="title">注册账号</h3>
+    <el-form direction="vertical">
+      <el-form-item label="用户名">
+        <el-input type="text" placeholder="请输入用户名"></el-input>
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-input type="password" placeholder="请输入密码"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" size="large" html-type="submit" class="submit-btn syjx">注册</el-button>
+      </el-form-item>
+      <el-form-item>
+        <div class="links">
+          <router-link class="syjx" to="/login">使用已有账号登录</router-link>
+        </div>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <style lang="scss">
-.reset-form {
-  width: 200px;
-}
+  @import '../../../common/style/sign/index.scss';
 </style>
 
 <script>

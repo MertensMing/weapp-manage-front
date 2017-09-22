@@ -3,8 +3,6 @@ import Login from '../pages/login/index'
 import Signup from '../pages/signup/index'
 import Reset from  '../pages/reset/index'
 
-console.log('Signup', Signup);
-
 const routes = [
   {
     path: '/reset',
