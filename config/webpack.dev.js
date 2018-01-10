@@ -1,30 +1,25 @@
 const webpack = require('webpack');
 const path = require('path');
 const Merge = require('webpack-merge');
-
-// 插件
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const generatorEntry = require('./generate.entry.js');
+const getEntry = require('./utils/getEntry.js');
 const commonConfig = require('./webpack.common.js');
+const extractStyle = require('./utils/extractStyle');
 
 const sourceDir = 'dist/local/';
-
-const entry = generatorEntry('prod');
-
-const extractStyle = new ExtractTextPlugin({
-  filename (getPath) {
-    return getPath('style/[name].css');
-  },
-  allChunks: true
-});
+const contentBase = path.resolve(__dirname, '../dist/local');
 
 module.exports = Merge(commonConfig, {
-  entry,
+  entry: getEntry('prod'),
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../dist/local')
+    path: contentBase
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, '../'),
+    compress: true,
+    port: 9000,
+    index: path.resolve(__dirname, '../index.html')
   },
   devtool: 'eval',
   module: {
@@ -35,40 +30,10 @@ module.exports = Merge(commonConfig, {
         exclude: /node_modules/
       },
       {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-        }
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            scss: 'vue-style-loader!css-loader!sass-loader'
-          }
-        }
-      },
-      {
-        test: /\.css$/,
-        use: extractStyle.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
-      },
-      {
         test: /\.scss$/,
         use: extractStyle.extract({
-          fallback: "style-loader",
+          fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
-        })
-      },
-      {
-        test: /\.less$/,
-        use: extractStyle.extract({
-          fallback: "style-loader",
-          use: ['css-loader', 'less-loader']
         })
       },
       {
