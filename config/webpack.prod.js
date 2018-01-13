@@ -3,19 +3,29 @@ const path = require('path');
 const Merge = require('webpack-merge');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const FastUglifyJsPlugin = require('fast-uglifyjs-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const extractStyle = require('./utils/extractStyle');
 const getEntry = require('./utils/getEntry');
 const commonConfig = require('./webpack.common');
 
-const sourceDir = 'http://ov9z0zlev.bkt.clouddn.com/';
+const PUBLIC_PATH = 'http://ov9z0zlev.bkt.clouddn.com/';
+const NODE_ENV = 'production';
 
-module.exports = Merge(commonConfig, {
-  entry: getEntry('prod'),
+const extractStyle = new ExtractTextPlugin({
+  filename (getPath) {
+    return getPath('style/[name].[contenthash].css');
+  },
+  allChunks: true
+});
+
+module.exports = Merge(commonConfig(NODE_ENV), {
+  entry: getEntry(NODE_ENV),
   output: {
     filename: '[name].[hash].js',
-    path: path.resolve(__dirname, '../dist/build')
+    chunkFilename: '[name].bundle.[hash].js',
+    path: path.resolve(__dirname, '../dist/build'),
+    publicPath: PUBLIC_PATH
   },
   module: {
     rules: [
@@ -27,34 +37,30 @@ module.exports = Merge(commonConfig, {
         })
       },
       {
-        test: /\.(png|svg|jpg|gif|jpeg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              publicPath: sourceDir,
-              name: '[path][name].[hash:6].[ext]'
-            }
-          }
-        ]
+        test: /\.css$/,
+        use: extractStyle.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              publicPath: sourceDir,
-              name: '[path][name].[hash:6].[ext]'
-            }
+        test: /\.(png|svg|jpg|gif|jpeg|woff|woff2|eot|ttf|otf)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: 'assets/[hash].[ext]',
+            publicPath: PUBLIC_PATH,
           }
-        ]
-      }
+        }]
+      },
     ]
   },
   plugins: [
+    new CleanWebpackPlugin('dist/build', {
+      root: path.resolve(__dirname, '../')
+    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -62,30 +68,25 @@ module.exports = Merge(commonConfig, {
       minChunks: 2
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: "manifest",
+      name: 'manifest',
       minChunks: Infinity,
       filename: '[name].[hash].js'
     }),
     new ManifestPlugin({
-      fileName: 'version.js.json',
-      filter: function (file) {
+      fileName: '../../resource/version.js.json',
+      filter(file) {
         return /\.js/.test(file.name)
       }
     }),
     new ManifestPlugin({
-      fileName: 'version.css.json',
-      filter: function (file) {
+      fileName: '../../resource/version.css.json',
+      filter(file) {
         return /\.css/.test(file.name)
       }
     }),
-    new FastUglifyJsPlugin({
-      compress: {
-          warnings: false
-      },
-      debug: true,
-      cache: false,
-      cacheFolder: path.resolve(__dirname, '.'),
-      workerNum: 20
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true
     }),
     extractStyle,
   ],
