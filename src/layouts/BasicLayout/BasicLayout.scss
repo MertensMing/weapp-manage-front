@@ -1,0 +1,11 @@
+@import "~style/common/var";
+
+.g-content.ant-layout-content {
+  margin: 24px 16px 0;
+
+  .route-wrap {
+    padding: 24px;
+    background: $whiteColor;
+    min-height: 360px;
+  }
+}

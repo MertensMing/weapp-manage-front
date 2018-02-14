@@ -14,6 +14,6 @@ const qiniuOptions = (bucket) => {
 };
 
 gulp.task('upload:cdn', () => {
-  gulp.src('../../dist/build/**/*.{js,css,png,svg,jpg,gif,jpeg,woff,woff2,eot,ttf,otf}')
+  gulp.src('../../dist/build/**/*.{js,css,png,svg,jpg,gif,ico,jpeg,woff,woff2,eot,ttf,otf}')
     .pipe(qiniuOptions('weapp-static'))
 });

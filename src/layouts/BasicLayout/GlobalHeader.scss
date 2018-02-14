@@ -1,0 +1,40 @@
+@import "~style/common/var";
+
+.global-header-container {
+
+  .header {
+    background-color: $whiteColor;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .menu-target {
+    cursor: pointer;
+    padding: 0 15px;
+    transition: background .2s ease;
+
+    &:hover {
+      color: $linkHoverColor;
+      background-color: $theme-primary-5;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid $borderColor;
+      margin-right: 10px;
+    }
+  }
+}
+
+.user-menu {
+
+  .menu-link {
+    padding: 4px 10px;
+    display: inline-block;
+    margin: 0;
+  }
+}

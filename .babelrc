@@ -5,10 +5,19 @@
     "stage-0"
   ],
   "plugins": [
+    "transform-runtime",
     [
       "import",
       {
         "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "ant-design-pro",
         "libraryDirectory": "es",
         "style": "css"
       }

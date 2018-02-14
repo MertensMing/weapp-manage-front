@@ -7,9 +7,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const getEntry = require('./utils/getEntry.js');
 const commonConfig = require('./webpack.common.js');
 
-const DEV_PORT = 8080;
+const DEV_PORT = 3000;
 const MOCK_PORT = 9090;
-const NODE_ENV = 'dev';
+const NODE_ENV = 'dev'; 
 
 const extractStyle = new ExtractTextPlugin({
   filename (getPath) {
@@ -23,7 +23,8 @@ module.exports = Merge(commonConfig(), {
   output: {
     filename: '[name].js',
     chunkFilename: '[name].bundle.js',
-    path: path.resolve(__dirname, '../dist/local')
+    path: path.resolve(__dirname, '../dist/local'),
+    publicPath: 'https://usoccer.cn/local/static/',
   },
   devServer: {
     index: path.resolve(__dirname, '../index.html'),
@@ -31,13 +32,15 @@ module.exports = Merge(commonConfig(), {
     port: DEV_PORT,
     proxy: {
       '/api/*': {
-        target: `http://localhost:${MOCK_PORT}`,
-        secure: false
+        target: `http://yapi.demo.qunar.com`,
+        pathRewrite: { '^/api' : '/mock/3577/api' },
+        changeOrigin: true
       },
     },
     compress: false,
+    historyApiFallback: true,
   },
-  devtool: 'eval',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -60,7 +63,7 @@ module.exports = Merge(commonConfig(), {
           loader: 'file-loader',
           options: {
             name: 'assets/[name].[ext]',
-            publicPath: `http://localhost:${DEV_PORT}/`
+            publicPath: `https://www.mertens.cn/`
           }
         }]
       }

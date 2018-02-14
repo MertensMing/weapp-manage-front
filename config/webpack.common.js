@@ -7,6 +7,7 @@ module.exports = () => {
       modules: [path.join(__dirname, '../src'), path.join(__dirname, '../node_modules')],
       alias: {
         '@': path.resolve(__dirname, '../src'),
+        'style': path.resolve(__dirname, '../src/style'),
       }
     },
     module: {

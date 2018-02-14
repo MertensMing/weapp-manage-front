@@ -1,19 +1,47 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Route, Router, hashHistory } from 'react-router'
-import dynamic from '@/utils/dynamic'
+import React, { Component } from 'react';
+import {
+  Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
+import { connect } from 'react-redux';
+import createBrowserHistory from 'history/createBrowserHistory';
+import { getRouterData } from '@/common/router';
+import Authorized from '@/utils/Authorized';
+import dynamic from '@/utils/dynamic';
 
-export default class AppRouter extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+const { AuthorizedRoute } = Authorized;
+
+export const history = createBrowserHistory();
+
+class AppRouter extends Component {
+  
+  componentWillMount() {}
+
   render() {
+    const routerData = getRouterData();
+    const BasicLayout = routerData['/'].component;
+    const UserLayout = routerData['/user'].component;
     return (
-      <Router history={hashHistory}>
-        <Route path="/" component={dynamic(() => import(/* webpackChunkName: "p_list" */ './pages/a'))}/>
-        <Route path="/b" component={dynamic(() => import(/* webpackChunkName: "p_b" */ './pages/b'))}/>
+      <Router history={history}>
+        <Switch>
+          <AuthorizedRoute
+            path="/user"
+            render={props => <UserLayout {...props} routerData={routerData} />}
+            authority="guest"
+            redirectPath="/"
+          />
+          <AuthorizedRoute
+            path="/"
+            authority={['admin']}
+            render={props => <BasicLayout {...props} routerData={routerData} />}
+            redirectPath="/user"
+          />
+        </Switch>
       </Router>
-    )
+    );
   }
 }
+
+export default connect()(AppRouter);

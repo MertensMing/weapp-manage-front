@@ -1,0 +1,53 @@
+@import "~style/common/var";
+
+.user-layout.container {
+  background: #f0f2f5;
+  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+  width: 100%;
+  min-height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  padding: 110px 0 144px 0;
+  position: relative;
+
+  .top {
+    text-align: center;
+  }
+  
+  .header {
+    height: 60px;
+    line-height: 60px;
+    a {
+      text-decoration: none;
+    }
+  }
+  
+  .logo {
+    height: 60px;
+    vertical-align: top;
+    box-shadow: 0 4px 6px rgba(50,50,93,.31), 0 1px 3px rgba(0,0,0,.08);
+    border-radius: 50%;
+  }
+  
+  .title {
+    font-size: 33px;
+    font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    position: relative;
+    top: 2px;
+    color: $theme-stroke-2;
+  }
+  
+  .desc {
+    margin-top: 12px;
+    margin-bottom: 40px;
+    color: $theme-stroke-5;
+  }
+  
+  .footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+}
